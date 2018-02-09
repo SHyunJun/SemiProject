@@ -3,8 +3,6 @@
 <html>
 <head><title> </title></head>
 <body>
-zzzzzzz
-강낭콩~
-또이!!!
+소희
 </body>
 </html>
