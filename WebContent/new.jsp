@@ -1,10 +1,8 @@
-<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" %>
 <!DOCTYPE html>
 <html>
-<head>
-<title>Insert title here</title>
-</head>
+<head><title> </title></head>
 <body>
-가나다라마바사아자차카타파하
+우앙
 </body>
 </html>
