@@ -1,10 +1,10 @@
-
-<%@ page language="java" contentType="text/html; charset=UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <title>Insert title here</title>
 </head>
 <body>
-알것같아!
+git try !!!
 </body>
+</html>
