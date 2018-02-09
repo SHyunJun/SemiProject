@@ -1,10 +1,11 @@
-<%@ page contentType="text/html; charset=UTF-8"%>
+
+<%@ page language="java" contentType="text/html; charset=UTF-8" %>
 <!DOCTYPE html>
 <html>
 <head>
 <title>Insert title here</title>
 </head>
 <body>
-ㅎㅎㅎ
+zzzzz
+강낭콩~
 </body>
-</html>
