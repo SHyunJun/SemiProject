@@ -6,9 +6,5 @@
 <title>Insert title here</title>
 </head>
 <body>
-zzzzz
-강낭콩~123123
-aaaaaaaaaaaaaa
-bbbbbbbbbbbbbb
-ccccccccccccc
+InHo
 </body>
