@@ -1,13 +1,13 @@
 package store.list;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.text.*;
+import java.util.*;
+import java.util.Date;
 
-public class StoreListDBBean {
-	
-	//DB Bean 인스턴스 생성
+
+public class StoreListDBBean { //DAO
+
 	private static StoreListDBBean instance = new StoreListDBBean();
 	public static StoreListDBBean getInstance() {
 		return instance;
@@ -22,102 +22,61 @@ public class StoreListDBBean {
 		return DriverManager.getConnection(jdbcDriver);
 	} //getConnection ends.
 
-	// 신규매장추가
-	public void insertStore(StoreListDataBean store_list) throws Exception{
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		try {
-			conn = getConnection();
-			pstmt = conn.prepareStatement("insert INTO STORE_LIST VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-			pstmt.setInt(1, store_list.getStoreNo());
-			pstmt.setInt(2, store_list.getRvNo());
-			pstmt.setInt(3, store_list.getEmpNo());
-			pstmt.setString(4, store_list.getCateNm());
-			pstmt.setString(5, store_list.getStoreNm());
-			pstmt.setString(6, store_list.getStoreExp());
-			pstmt.setString(7, store_list.getStorePlc());
-			pstmt.setString(8, store_list.getStoreTel());
-			pstmt.setString(9, store_list.getStoreInfo());
-			pstmt.setString(10, store_list.getStoreExpDt());
-			pstmt.setInt(11, store_list.getTotTblCnt());
-			pstmt.setInt(12, store_list.getAvlTblCnt());
-			pstmt.setString(13, store_list.getStoreUrl());
-			pstmt.setString(14, store_list.getImgRoot());
-			pstmt.setInt(15, store_list.getAvgPrice());
-			pstmt.setInt(16, store_list.getPreference());
-		} catch (Exception e) {
-			e.printStackTrace();
-			// TODO: handle exception
-		} finally {
-			if(conn != null) try {conn.close();} catch(SQLException ex) {}
-			if(pstmt != null) try {pstmt.close();} catch(SQLException ex) {}
-		}
-		
-	}
-	// 기존매장정보변경
-	public void UpdateStore(StoreListDataBean store_list) throws Exception{
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		try {
-			conn = getConnection();
-			pstmt = conn.prepareStatement("UPDATE STORE_LIST SET (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-			pstmt.setInt(1, store_list.getStoreNo());
-			pstmt.setInt(2, store_list.getRvNo());
-			pstmt.setInt(3, store_list.getEmpNo());
-			pstmt.setString(4, store_list.getCateNm());
-			pstmt.setString(5, store_list.getStoreNm());
-			pstmt.setString(6, store_list.getStoreExp());
-			pstmt.setString(7, store_list.getStorePlc());
-			pstmt.setString(8, store_list.getStoreTel());
-			pstmt.setString(9, store_list.getStoreInfo());
-			pstmt.setString(10, store_list.getStoreExpDt());
-			pstmt.setInt(11, store_list.getTotTblCnt());
-			pstmt.setInt(12, store_list.getAvlTblCnt());
-			pstmt.setString(13, store_list.getStoreUrl());
-			pstmt.setString(14, store_list.getImgRoot());
-			pstmt.setInt(15, store_list.getAvgPrice());
-			pstmt.setInt(16, store_list.getPreference());
-		} catch (Exception e) {
-			e.printStackTrace();
-			// TODO: handle exception
-		} finally {
-			if(conn != null) try {conn.close();} catch(SQLException ex) {}
-			if(pstmt != null) try {pstmt.close();} catch(SQLException ex) {}
-		}
-		
-	}
 	
-	// 예약현황에 따른 테이블 수 변경(trigger)
-	public void UpdateTblCnt(StoreListDataBean store_list) throws Exception{
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		try {
-			conn = getConnection();
-			pstmt = conn.prepareStatement("UPDATE STORE_LIST SET ");
-			pstmt.setInt(1, store_list.getStoreNo());
-			pstmt.setInt(2, store_list.getRvNo());
-			pstmt.setInt(3, store_list.getEmpNo());
-			pstmt.setString(4, store_list.getCateNm());
-			pstmt.setString(5, store_list.getStoreNm());
-			pstmt.setString(6, store_list.getStoreExp());
-			pstmt.setString(7, store_list.getStorePlc());
-			pstmt.setString(8, store_list.getStoreTel());
-			pstmt.setString(9, store_list.getStoreInfo());
-			pstmt.setString(10, store_list.getStoreExpDt());
-			pstmt.setInt(11, store_list.getTotTblCnt());
-			pstmt.setInt(12, store_list.getAvlTblCnt());
-			pstmt.setString(13, store_list.getStoreUrl());
-			pstmt.setString(14, store_list.getImgRoot());
-			pstmt.setInt(15, store_list.getAvgPrice());
-			pstmt.setInt(16, store_list.getPreference());
+   public ArrayList<StoreListDataBean> getUpdateCurCnt() {
+      ArrayList<StoreListDataBean> list = null;
+      Connection conn = null;
+      PreparedStatement pstmt = null;
+      ResultSet rs = null;
+
+      try {
+         Date date = new Date(System.currentTimeMillis());
+         SimpleDateFormat simple = new SimpleDateFormat("m");
+         String sysdate = simple.format(date).toString();
+         String x = sysdate.substring(1); // 분은 2자리니까 인덱스는 0부터지만 1을뽑았다. 1의 자리 비교할라구..
+         if (x.equals("5")) {
+            System.out.println("5분마다 업데이트됩니다.");
+            String sql = "update booking set confirm_yn = 'y'";
+            conn = getConnection();
+            pstmt = conn.prepareStatement(sql);
+            conn.setAutoCommit(false);
+            int check = pstmt.executeUpdate();
+            if (check == 1) {
+               sql = "select store_nm, cur_tbl_cnt, avl_tbl_cnt from store_list";
+               pstmt = conn.prepareStatement(sql);
+               rs = pstmt.executeQuery();
+               list = new ArrayList<StoreListDataBean>();
+               while (rs.next()) {
+                  StoreListDataBean dto = new StoreListDataBean();
+                  // 생성한 dto 객체의 화면의 보여줄 값을 담아주는 코드 set을
+                  list.add(dto);
+               }
+            }
+         } else {
+            System.out.println("냥냥");
+         }
+         conn.commit();
+         conn.setAutoCommit(true);
+      } catch (
+      Exception e) {
+         e.printStackTrace();
+         try {   conn.rollback();} catch (SQLException e1) {e1.printStackTrace();}
+      } finally {
+        try {
+       	JdbcUtil.close(rs);
+       	JdbcUtil.close(pstmt);
+		JdbcUtil.close(conn);
 		} catch (Exception e) {
 			e.printStackTrace();
-			// TODO: handle exception
-		} finally {
-			if(conn != null) try {conn.close();} catch(SQLException ex) {}
-			if(pstmt != null) try {pstmt.close();} catch(SQLException ex) {}
 		}
-		
-	}
+      }
+      return list; 
+   }
 
-}//class ends.
+public StoreListDataBean get(int i) {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+
+}

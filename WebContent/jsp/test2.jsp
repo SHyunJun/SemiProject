@@ -3,8 +3,6 @@
 <!-- jsp 설정들  ============== list.jsp 참조 -->
 <%@ page import="board.BoardDBBean"%>
 <%@ page import="board.BoardDataBean"%>
-<%@ page import="board.CommentDBBean" %>
-<%@ page import="board.CommentDataBean" %>
 <%@ page import="java.util.List"%>
 <%@ page import="java.lang.*" %>
 <%@ page import="java.text.SimpleDateFormat"%>

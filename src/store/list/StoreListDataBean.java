@@ -49,6 +49,10 @@ public class StoreListDataBean {
 
     //  매장별 선호도
     private Integer preference;
+    
+    //  사용중인테이블수
+    private Integer curTblCnt;
+    
 
     public Integer getStoreNo() {
         return storeNo;
@@ -177,4 +181,13 @@ public class StoreListDataBean {
     public void setPreference(Integer preference) {
         this.preference = preference;
     }
+    
+    public void setCurTblCnt(Integer curTblCnt) {
+        this.curTblCnt = curTblCnt;
+    }
+
+	public Integer getCurTblCnt() {
+		return curTblCnt;
+	}
+    
 }
