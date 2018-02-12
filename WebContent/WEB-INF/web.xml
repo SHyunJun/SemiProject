@@ -1,21 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
-  <display-name>SemiProject</display-name>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+	version="3.1">
+	<display-name>SemiProject</display-name>
+
+	<servlet>
+		<servlet-name>DBCPInit</servlet-name>
+		<servlet-class>logon.DBCPInit</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.htm</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>default.html</welcome-file>
+		<welcome-file>default.htm</welcome-file>
+		<welcome-file>default.jsp</welcome-file>
+	</welcome-file-list>
+
+	 <!-- 답변형 게시판 설정 -->
+  	<servlet>
+  		<servlet-name>ControllerUsingURI</servlet-name>
+  		<servlet-class>mvc.controller2.ControllerUsingURI</servlet-class>
+  		<init-param>
+  			<param-name>propertyConfig</param-name>
+  			<!-- <param-value>/WEB-INF/commandHandlerURI.properties</param-value> -->
+  			<param-value>D:\song\workspace\SemiProject\WebContent\WEB-INF\commandHandlerURI.properties</param-value>
+  		</init-param>
+  	</servlet>
   
-  
-  <servlet>
-  	<servlet-name>DBCPInit</servlet-name>
-  	<servlet-class>jdbc.DBCPInit</servlet-class>
-  	<load-on-startup>1</load-on-startup>
-  </servlet>
-  
-  
-  <welcome-file-list>
-    <welcome-file>index.html</welcome-file>
-    <welcome-file>index.htm</welcome-file>
-    <welcome-file>index.jsp</welcome-file>
-    <welcome-file>default.html</welcome-file>
-    <welcome-file>default.htm</welcome-file>
-    <welcome-file>default.jsp</welcome-file>
-  </welcome-file-list>
+  	<servlet-mapping>
+  		<servlet-name>ControllerUsingURI</servlet-name>
+  		<url-pattern>*.do</url-pattern><!-- 임의의 확장자를 결정해서 해당 서블릿이 실행되도록 하는것 ex) .do, .nhn 등등 사전에 정해두고 통일하기 -->
+  	</servlet-mapping>
+  <!-- 답변형 게시판 설정 -->
 </web-app>

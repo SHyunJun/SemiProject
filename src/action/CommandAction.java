@@ -1,15 +1,9 @@
 package action;
 
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-//¿äÃ» ÆÄ¶ó¹ÌÅÍ·Î ¸í·É¾î¸¦ Àü´ŞÇÏ´Â ¹æ½ÄÀÇ ½´ÆÛ ÀÎÅÍÆäÀÌ½º
+// ìš”ì²­ íŒŒë¼ë¯¸í„°ë¡œ ëª…ë ¹ì–´ë¥¼ ì „ë‹¬í•˜ëŠ” ë°©ì‹ì˜ ìŠˆí¼ ì¸í„°í˜ì´ìŠ¤
 public interface CommandAction {
-	public String requestPro(HttpServletRequest request, HttpServletResponse response)throws Throwable;
-<<<<<<< HEAD
-	123123
-=======
-	adfadf
->>>>>>> refs/heads/dojunhee
+	public String requestPro(HttpServletRequest request, HttpServletResponse response) throws Throwable;
 }
